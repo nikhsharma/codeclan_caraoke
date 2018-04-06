@@ -69,4 +69,8 @@ class TestRoom < MiniTest::Test
     assert_equal(8, @room.guests.count)
   end
 
+  def test_room_can_play_song()
+    assert_equal("Now playing: Dr. Test - Test Song", @room.play_song(@song1))
+  end
+
 end

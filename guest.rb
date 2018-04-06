@@ -5,4 +5,8 @@ class Guest
     @name = name
   end
 
+
+  def play_song(song)
+    song.play()
+  end
 end

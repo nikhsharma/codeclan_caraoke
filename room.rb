@@ -21,6 +21,10 @@ class Room
     @songs.push(song)
   end
 
+  def play_song(song)
+    return song.play
+  end
+
 
 
 end
