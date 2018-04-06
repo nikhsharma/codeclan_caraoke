@@ -11,4 +11,8 @@ class Room
     @guests.push(guest)
   end
 
+  def check_out(guest)
+    @guests.delete(guest)
+  end
+
 end

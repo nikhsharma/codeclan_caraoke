@@ -35,4 +35,11 @@ class TestRoom < MiniTest::Test
     assert_equal([@guest1, @guest2], @room.guests)
   end
 
+  def test_room_can_check_guest_out()
+    @room.check_in(@guest1)
+    @room.check_in(@guest2)
+    @room.check_out(@guest1)
+    assert_equal([@guest2], @room.guests)
+  end
+
 end
