@@ -10,6 +10,14 @@ class TestRoom < MiniTest::Test
   def setup()
     @guest1 = Guest.new("Guy")
     @guest2 = Guest.new("Bob")
+    @guest3 = Guest.new("Dave")
+    @guest4 = Guest.new("Sue")
+    @guest5 = Guest.new("Paul")
+    @guest6 = Guest.new("Emma")
+    @guest7 = Guest.new("Tom")
+    @guest8 = Guest.new("Kyle")
+    @guest9 = Guest.new("Man")
+    @guest10 = Guest.new("Zoo")
     @song1 = Song.new("Test Song", "Dr. Test")
     @song2 = Song.new("Testing, yo", "Test-o")
     @songs = [@song1]
@@ -45,6 +53,20 @@ class TestRoom < MiniTest::Test
   def test_room_can_add_song()
     @room.add_song(@song2)
     assert_equal([@song1, @song2], @room.songs)
+  end
+
+  def test_room_guest_limit()
+    @room.check_in(@guest1)
+    @room.check_in(@guest2)
+    @room.check_in(@guest3)
+    @room.check_in(@guest4)
+    @room.check_in(@guest5)
+    @room.check_in(@guest6)
+    @room.check_in(@guest7)
+    @room.check_in(@guest8)
+    @room.check_in(@guest9)
+    @room.check_in(@guest10)
+    assert_equal(8, @room.guests.count)
   end
 
 end
