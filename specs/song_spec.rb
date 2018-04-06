@@ -18,4 +18,7 @@ class TestSong < MiniTest::Test
     assert_equal("Dr. Test", @song.artist())
   end
 
+  def test_song_can_play()
+    assert_equal("Now playing: Dr. Test - Test Song", @song.play)
+  end
 end
