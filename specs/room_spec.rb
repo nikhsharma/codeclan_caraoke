@@ -8,20 +8,20 @@ require_relative("../song.rb")
 class TestRoom < MiniTest::Test
 
   def setup()
-    @guest1 = Guest.new("Guy", 100)
-    @guest2 = Guest.new("Bob", 70)
-    @guest3 = Guest.new("Dave", 40)
-    @guest4 = Guest.new("Sue", 30)
-    @guest5 = Guest.new("Paul", 120)
-    @guest6 = Guest.new("Emma", 30)
-    @guest7 = Guest.new("Tom", 500)
-    @guest8 = Guest.new("Kyle", 300)
-    @guest9 = Guest.new("Man", 150)
-    @guest10 = Guest.new("Zoo", 80)
     @song1 = Song.new("Test Song", "Dr. Test")
     @song2 = Song.new("Testing, yo", "Test-o")
     @songs = [@song1]
     @room = Room.new(@songs)
+    @guest1 = Guest.new("Guy", 100, @song1)
+    @guest2 = Guest.new("Bob", 70, @song2)
+    @guest3 = Guest.new("Dave", 40, "")
+    @guest4 = Guest.new("Sue", 30, "")
+    @guest5 = Guest.new("Paul", 120, "")
+    @guest6 = Guest.new("Emma", 30, "")
+    @guest7 = Guest.new("Tom", 500, "")
+    @guest8 = Guest.new("Kyle", 300, "")
+    @guest9 = Guest.new("Man", 150, "")
+    @guest10 = Guest.new("Zoo", 80, "")
   end
 
   def test_room_has_songs()
@@ -76,6 +76,14 @@ class TestRoom < MiniTest::Test
   def test_entry_fee()
     @room.check_in(@guest2)
     assert_equal(60, @room.guests[0].money)
+  end
+
+  def test_room_has_guests_favourite_song()
+    assert_equal("Woo!", @room.check_in(@guest1))
+  end
+
+  def test_room_doesnt_have_guests_favourite_song()
+    assert_nil(@room.check_in(@guest2))
   end
 
 end
