@@ -19,7 +19,7 @@ class TestGuest < MiniTest::Test
 
   def test_guest_can_play_song_in_room()
     @room.check_in(@guest)
-    assert_equal("Now playing: Dr. Test - Test Song", @guest.play_song(@song))
+    assert_equal("Now playing: Dr. Test - Test Song", @guest.play_song(@room, @song))
   end
 
 end

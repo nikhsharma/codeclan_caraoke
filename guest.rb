@@ -6,7 +6,7 @@ class Guest
   end
 
 
-  def play_song(song)
-    song.play()
+  def play_song(room, song)
+    room.play_song(song)
   end
 end
