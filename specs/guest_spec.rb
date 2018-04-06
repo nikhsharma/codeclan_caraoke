@@ -26,4 +26,14 @@ class TestGuest < MiniTest::Test
     assert_equal("Now playing: Dr. Test - Test Song", @guest.play_song(@room, @song))
   end
 
+  def test_guest_can_pay__has_enough_money()
+    @guest.pay(10)
+    assert_equal(90, @guest.money)
+  end
+
+  def test_guest_can_pay__not_enough_money()
+    @guest.pay(120)
+    assert_equal(100, @guest.money)
+  end
+
 end
