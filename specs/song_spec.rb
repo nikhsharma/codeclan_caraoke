@@ -10,8 +10,12 @@ class TestSong < MiniTest::Test
     @song = Song.new("Test Song", "Dr. Test")
   end
 
-  def test_song_has_title
+  def test_song_has_title()
     assert_equal("Test Song", @song.title())
+  end
+
+  def test_song_has_artist()
+    assert_equal("Dr. Test", @song.artist())
   end
 
 end
