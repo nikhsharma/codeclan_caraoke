@@ -8,13 +8,17 @@ require_relative("../song.rb")
 class TestGuest < MiniTest::Test
 
   def setup()
-    @guest = Guest.new("Guy")
+    @guest = Guest.new("Guy", 100)
     @song = Song.new("Test Song", "Dr. Test")
     @room = Room.new([@song])
   end
 
   def test_guest_has_name()
     assert_equal("Guy", @guest.name)
+  end
+
+  def test_guest_has_money()
+    assert_equal(100, @guest.money)
   end
 
   def test_guest_can_play_song_in_room()
