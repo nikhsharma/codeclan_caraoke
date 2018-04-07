@@ -16,5 +16,9 @@ class Caraoke
     room.check_in(guest)
   end
 
+  def sells_drink(guest, drink)
+    guest.pay(@bar.sell_drink(guest, drink)) if @bar.sell_drink(guest, drink)
+  end
+
 
 end

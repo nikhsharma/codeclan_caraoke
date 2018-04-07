@@ -5,6 +5,7 @@ require_relative("../room.rb")
 require_relative("../guest.rb")
 require_relative("../song.rb")
 require_relative("../bar.rb")
+require_relative("../caraoke.rb")
 
 class TestRoom < MiniTest::Test
 
@@ -14,6 +15,7 @@ class TestRoom < MiniTest::Test
     @songs = [@song1]
     @bar = Bar.new()
     @room = Room.new(@songs, @bar)
+    @venue = Caraoke.new([@room], @bar)
     @guest1 = Guest.new("Guy", 100, @song1)
     @guest2 = Guest.new("Bob", 70, @song2)
     @guest3 = Guest.new("Dave", 40, "")
@@ -53,8 +55,8 @@ class TestRoom < MiniTest::Test
   end
 
   def test_guest_checks_out__goes_to_venue()
-    @guest.check_into_room(@venue, @room)
-    @guest.check_out_of_room(@venue, @room)
+    @guest1.check_into_room(@venue, @room)
+    @guest1.check_out_of_room(@room, @venue)
     assert_equal(1, @venue.guests.count)
   end
 
@@ -135,5 +137,22 @@ class TestRoom < MiniTest::Test
     assert_equal([{guest: @room.guests[0].name, tab: 17}, {guest: @room.guests[1].name, tab: 16}], @room.guests_tab)
   end
 
+  def test_room_doesnt_allow_entry__not_enough_money()
+    @guest1.enter_venue(@venue)
+    @guest1.pay(95)
+    @guest1.check_into_room(@venue, @venue.rooms[0])
+    assert_equal(0, @venue.rooms[0].guests.count)
+    assert_equal(1, @venue.guests.count)
+  end
+
+  def test_room_wont_sell_drink__not_enough_money()
+    @room.check_in(@guest1)
+    @guest1.pay(89)
+    @guest1.buy(@room, @room.bar.drinks[0])
+    assert_equal(11, @guest1.money)
+    assert_equal(10, @room.guests[0].tab)
+    assert_equal(1, @guest1.remaining_cash)
+
+  end
 
 end

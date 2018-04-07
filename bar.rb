@@ -15,7 +15,7 @@ class Bar
       ]
   end
 
-  def sell_drink(drink)
-    return drink[:price]
+  def sell_drink(guest, drink)
+    guest.remaining_cash >= drink[:price] ? drink[:price] : false
   end
 end

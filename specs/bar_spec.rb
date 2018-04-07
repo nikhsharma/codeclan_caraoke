@@ -18,7 +18,13 @@ class TestBar < MiniTest::Test
   end
 
   def test_bar_can_sell_drink()
-    assert_equal(3, @bar.sell_drink(@bar.drinks[0]))
+    assert_equal(3, @bar.sell_drink(@guest, @bar.drinks[0]))
+  end
+
+  def test_bar_wont_sell_drink__not_enough_money()
+    @guest.pay(99)
+    @bar.sell_drink(@guest, @bar.drinks[0])
+    assert_equal(1, @guest.money)
   end
 
 

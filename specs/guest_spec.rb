@@ -71,4 +71,17 @@ class TestGuest < MiniTest::Test
     assert_equal(1, @venue.rooms[0].guests.count)
   end
 
+  def test_guest_can_buy_from_venue()
+    @guest.buy_from_venue(@venue, @venue.bar.drinks[2])
+    assert_equal(96, @guest.money)
+  end
+
+  def test_guest_cant_afford_entry()
+    @guest.enter_venue(@venue)
+    @venue.guests[0].pay(95)
+    @venue.guests[0].check_into_room(@venue, @venue.rooms[0])
+    assert_equal(0, @venue.rooms[0].guests.count)
+    assert_equal(1, @venue.guests.count)
+  end
+
 end

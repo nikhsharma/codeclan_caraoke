@@ -52,4 +52,18 @@ class TestCaraoke < MiniTest::Test
     assert_equal(1, @venue.rooms[0].guests.count)
   end
 
+  def test_guest_can_buy_drink_from_venue_bar()
+    @guest1.enter_venue(@venue)
+    @venue.sells_drink(@venue.guests[0], @venue.bar.drinks[0])
+    assert_equal(47, @venue.guests[0].money)
+  end
+
+  def test_venue_wont_sell_drink__not_enough_money()
+    @guest1.enter_venue(@venue)
+    @guest1.pay(49)
+    @venue.sells_drink(@venue.guests[0], @venue.bar.drinks[0])
+    assert_equal(1, @guest1.remaining_cash)
+    assert_equal(1, @guest1.money)
+  end
+
 end
