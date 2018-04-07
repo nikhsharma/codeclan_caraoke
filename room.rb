@@ -16,9 +16,10 @@ class Room
     guest.sees_favourite_song(@songs)
   end
 
-  def check_out(guest)
+  def check_out(guest, venue)
     guest.pay(guest.tab)
     @guests.delete(guest)
+    venue.guests.push(guest)
   end
 
   def add_song(song)

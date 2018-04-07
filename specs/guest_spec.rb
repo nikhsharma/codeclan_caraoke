@@ -56,7 +56,7 @@ class TestGuest < MiniTest::Test
   def test_guest_buys_drink()
     @room.check_in(@guest)
     @room.guests[0].buy(@room, @room.bar.drinks[0])
-    @room.check_out(@room.guests[0])
+    @room.check_out(@room.guests[0], @venue)
     assert_equal(87, @guest.money)
   end
 

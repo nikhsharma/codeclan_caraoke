@@ -48,8 +48,14 @@ class TestRoom < MiniTest::Test
   def test_room_can_check_guest_out()
     @room.check_in(@guest1)
     @room.check_in(@guest2)
-    @room.check_out(@guest1)
+    @room.check_out(@guest1, @venue)
     assert_equal([@guest2], @room.guests)
+  end
+
+  def test_guest_checks_out__goes_to_venue()
+    @guest.check_into_room(@venue, @room)
+    @guest.check_out_of_room(@venue, @room)
+    assert_equal(1, @venue.guests.count)
   end
 
   def test_room_can_add_song()
@@ -102,7 +108,7 @@ class TestRoom < MiniTest::Test
   def test_guest_pays_tab_when_leaving()
     @room.check_in(@guest1)
     @room.sell_drink(@room.guests[0], @room.bar.drinks[0])
-    @room.check_out(@room.guests[0])
+    @room.check_out(@room.guests[0], @venue)
     assert_equal(87, @guest1.money)
   end
 

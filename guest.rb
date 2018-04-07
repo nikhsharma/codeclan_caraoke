@@ -21,9 +21,7 @@ class Guest
   end
 
   def sees_favourite_song(songs)
-    if songs.include? @favourite_song
-      return "Woo!"
-    end
+      return "Woo!" if songs.include? @favourite_song
   end
 
   def buy(room, drink)
@@ -36,6 +34,10 @@ class Guest
 
   def check_into_room(venue, room)
     venue.check_into_room(room , self)
+  end
+
+  def check_out_of_room(room, venue)
+    room.check_out(self, venue)
   end
 
 
