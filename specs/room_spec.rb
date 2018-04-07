@@ -77,7 +77,7 @@ class TestRoom < MiniTest::Test
 
   def test_entry_fee()
     @room.check_in(@guest2)
-    assert_equal(60, @room.guests[0].money)
+    assert_equal(10, @room.guests[0].tab)
   end
 
   def test_room_has_guests_favourite_song()
@@ -91,12 +91,19 @@ class TestRoom < MiniTest::Test
   def test_room_can_sell_drink_from_bar()
     @room.check_in(@guest1)
     @room.sell_drink(@room.guests[0], @room.bar.drinks[0])
-    assert_equal(87, @room.guests[0].money)
+    assert_equal(13, @room.guests[0].tab)
   end
 
   def test_spending_tab__before_drink()
     @room.check_in(@guest1)
     assert_equal([{guest: "Guy", tab: 10}], @room.guests_tab)
+  end
+
+  def test_guest_pays_tab_when_leaving()
+    @room.check_in(@guest1)
+    @room.sell_drink(@room.guests[0], @room.bar.drinks[0])
+    @room.check_out(@room.guests[0])
+    assert_equal(87, @guest1.money)
   end
 
   def test_tab__one_guest_one_drink()

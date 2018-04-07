@@ -12,11 +12,12 @@ class Room
 
   def check_in(guest)
     @guests.push(guest) if @guests.count < 8
-    guest.pay(@entry_fee)
+    guest.add_to_tab(@entry_fee)
     guest.sees_favourite_song(@songs)
   end
 
   def check_out(guest)
+    guest.pay(guest.tab)
     @guests.delete(guest)
   end
 
@@ -29,7 +30,8 @@ class Room
   end
 
   def sell_drink(guest, drink)
-    guest.pay(@bar.sell_drink(drink))
+    guest.add_to_tab(@bar.sell_drink(drink))
+
   end
 
   def guests_tab()

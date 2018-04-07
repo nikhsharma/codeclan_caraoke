@@ -5,6 +5,7 @@ require_relative("../guest.rb")
 require_relative("../room.rb")
 require_relative("../song.rb")
 require_relative("../bar.rb")
+require_relative("../caraoke.rb")
 
 class TestGuest < MiniTest::Test
 
@@ -14,6 +15,7 @@ class TestGuest < MiniTest::Test
     @guest2 = Guest.new("Bob", 100, "song I like")
     @bar = Bar.new()
     @room = Room.new([@song], @bar)
+    @venue = Caraoke.new([@room], @bar)
   end
 
   def test_guest_has_name()
@@ -54,9 +56,19 @@ class TestGuest < MiniTest::Test
   def test_guest_buys_drink()
     @room.check_in(@guest)
     @room.guests[0].buy(@room, @room.bar.drinks[0])
+    @room.check_out(@room.guests[0])
     assert_equal(87, @guest.money)
   end
 
+  def test_guest_can_enter_venue()
+    @guest.enter_venue(@venue)
+    assert_equal([@guest], @venue.guests)
+  end
 
+  def test_guest_can_check_into_room()
+    @guest.enter_venue(@venue)
+    @venue.guests[0].check_into_room(@venue, @venue.rooms[0])
+    assert_equal(1, @venue.rooms[0].guests.count)
+  end
 
 end

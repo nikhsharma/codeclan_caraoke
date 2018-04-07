@@ -14,7 +14,10 @@ class Guest
 
   def pay(amount)
     @money -= amount if money >= amount
-    @tab += amount
+  end
+
+  def add_to_tab(amount)
+    @tab += amount if money >= amount
   end
 
   def sees_favourite_song(songs)
@@ -27,7 +30,13 @@ class Guest
     room.sell_drink(self, drink)
   end
 
+  def enter_venue(venue)
+    venue.guest_enters(self)
+  end
 
+  def check_into_room(venue, room)
+    venue.check_into_room(room , self)
+  end
 
 
 end
