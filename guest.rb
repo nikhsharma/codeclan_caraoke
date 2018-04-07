@@ -1,9 +1,10 @@
 class Guest
 
-  attr_reader :name, :money, :favourite_song
+  attr_reader :name, :money, :favourite_song, :tab
   def initialize(name, money, favourite_song)
     @name = name
     @money = money
+    @tab = 0
     @favourite_song = favourite_song
   end
 
@@ -13,6 +14,7 @@ class Guest
 
   def pay(amount)
     @money -= amount if money >= amount
+    @tab += amount
   end
 
   def sees_favourite_song(songs)
@@ -21,6 +23,9 @@ class Guest
     end
   end
 
+  def buy(room, drink)
+    room.sell_drink(self, drink)
+  end
 
 
 

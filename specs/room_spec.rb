@@ -4,6 +4,7 @@ require("minitest/rg")
 require_relative("../room.rb")
 require_relative("../guest.rb")
 require_relative("../song.rb")
+require_relative("../bar.rb")
 
 class TestRoom < MiniTest::Test
 
@@ -11,7 +12,8 @@ class TestRoom < MiniTest::Test
     @song1 = Song.new("Test Song", "Dr. Test")
     @song2 = Song.new("Testing, yo", "Test-o")
     @songs = [@song1]
-    @room = Room.new(@songs)
+    @bar = Bar.new()
+    @room = Room.new(@songs, @bar)
     @guest1 = Guest.new("Guy", 100, @song1)
     @guest2 = Guest.new("Bob", 70, @song2)
     @guest3 = Guest.new("Dave", 40, "")
@@ -85,5 +87,40 @@ class TestRoom < MiniTest::Test
   def test_room_doesnt_have_guests_favourite_song()
     assert_nil(@room.check_in(@guest2))
   end
+
+  def test_room_can_sell_drink_from_bar()
+    @room.check_in(@guest1)
+    @room.sell_drink(@room.guests[0], @room.bar.drinks[0])
+    assert_equal(87, @room.guests[0].money)
+  end
+
+  def test_spending_tab__before_drink()
+    @room.check_in(@guest1)
+    assert_equal([{guest: "Guy", tab: 10}], @room.guests_tab)
+  end
+
+  def test_tab__one_guest_one_drink()
+    @room.check_in(@guest1)
+    @room.sell_drink(@room.guests[0], @room.bar.drinks[0])
+    assert_equal([{guest: @room.guests[0].name, tab: 13}], @room.guests_tab)
+  end
+
+  def test_tab__one_guest_two_drinks()
+    @room.check_in(@guest1)
+    @room.sell_drink(@room.guests[0], @room.bar.drinks[0])
+    @room.sell_drink(@room.guests[0], @room.bar.drinks[1])
+    assert_equal([{guest: @room.guests[0].name, tab: 17}], @room.guests_tab)
+  end
+
+  def test_tab__two_guest_two_drinks()
+    @room.check_in(@guest1)
+    @room.check_in(@guest2)
+    @room.sell_drink(@room.guests[0], @room.bar.drinks[0])
+    @room.sell_drink(@room.guests[0], @room.bar.drinks[2])
+    @room.sell_drink(@room.guests[1], @room.bar.drinks[0])
+    @room.sell_drink(@room.guests[1], @room.bar.drinks[0])
+    assert_equal([{guest: @room.guests[0].name, tab: 17}, {guest: @room.guests[1].name, tab: 16}], @room.guests_tab)
+  end
+
 
 end

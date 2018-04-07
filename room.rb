@@ -1,11 +1,13 @@
 class Room
 
-  attr_reader :songs, :guests
+  attr_reader :songs, :guests, :tab, :bar
 
-  def initialize(songs)
+  def initialize(songs, bar)
     @songs = songs
+    @bar = bar
     @guests = []
     @entry_fee = 10
+    @tab = []
   end
 
   def check_in(guest)
@@ -26,6 +28,13 @@ class Room
     return song.play
   end
 
+  def sell_drink(guest, drink)
+    guest.pay(@bar.sell_drink(drink))
+  end
+
+  def guests_tab()
+    @tab = @guests.map {|guest| {guest: guest.name, tab: guest.tab} }
+  end
 
 
 end
