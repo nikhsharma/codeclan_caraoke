@@ -27,5 +27,9 @@ class TestBar < MiniTest::Test
     assert_equal(1, @guest.money)
   end
 
+  def test_search_for_drink()
+    assert_equal({drink: "beer", price: 3}, @bar.search("beer"))
+  end
+
 
 end

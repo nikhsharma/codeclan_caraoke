@@ -18,4 +18,8 @@ class Bar
   def sell_drink(guest, drink)
     guest.remaining_cash >= drink[:price] ? drink[:price] : false
   end
+
+  def search(type)
+    return @drinks.find { |drink| drink[:drink] == type}
+  end
 end

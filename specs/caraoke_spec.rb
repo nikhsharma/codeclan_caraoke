@@ -66,4 +66,13 @@ class TestCaraoke < MiniTest::Test
     assert_equal(1, @guest1.money)
   end
 
+  def test_search_guest_by_name()
+    @venue.guest_enters(@guest1)
+    assert_equal(@guest1, @venue.search_guests("Bob"))
+  end
+
+  def test_search_rooms()
+    assert_equal(@room1, @venue.search_rooms(@room1))
+  end
+
 end

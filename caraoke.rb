@@ -20,5 +20,13 @@ class Caraoke
     guest.pay(@bar.sell_drink(guest, drink)) if @bar.sell_drink(guest, drink)
   end
 
+  def search_guests(search)
+    @guests.find { |guest| guest.name == search}
+  end
+
+  def search_rooms(search)
+    @rooms.find { |room| room == search}
+  end
+
 
 end
