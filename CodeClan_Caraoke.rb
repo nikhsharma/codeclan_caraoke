@@ -11,16 +11,14 @@ require_relative("song.rb")
 @song3 = Song.new("Trying Stuff", "Will-it-work")
 @song4 = Song.new("Another Song", "Dr. Test")
 @songs2 = [@song3, @song4]
+@all_songs = [@song1, @song2, @song3, @song4]
 @bar = Bar.new()
 @blueroom = Room.new(@songs1, @bar)
 @redroom = Room.new(@songs2, @bar)
 @yellowroom = Room.new([@song2, @song3], @bar)
 @rooms = [@room1, @room2, @room3]
 @venue = Caraoke.new(@rooms, @bar)
-@bob = Guest.new("Bob", 50, @song1)
-@barb = Guest.new("Barb", 50, @song2)
-@brenda = Guest.new("Brenda", 50, @song3)
-@ben = Guest.new("Ben", 50, @song4)
+
 
 
 def main_menu()
@@ -118,12 +116,43 @@ def venue_menu()
       end
     when "2"
       #check guest into room
-
+      good_input = false
+      puts "Guests: #{@venue.guests.map {|guest| guest.name}}"
+      puts "Guest to check in:"
+      guest = @venue.search_guests(gets.chomp)
+      system "clear"
+      puts "Guests: #{@venue.guests.map {|guest| guest.name}}"
+      puts "Into which room?"
+      puts "1. Blue"
+      puts "2. Red"
+      puts "3. Yellow"
+      until good_input == true
+      room = gets.chomp
+      case room
+      when"1"
+        @venue.check_into_room(@blueroom, guest)
+        good_input = true
+      when "2"
+        @venue.check_into_room(@redroom, guest)
+        good_input = true
+      when "3"
+        @venue.check_into_room(@yellowroom, guest)
+        good_input = true
+      else
+        puts "Guests: #{@venue.guests.map {|guest| guest.name}}"
+        puts "Into which room?"
+        puts "1. Blue"
+        puts "2. Red"
+        puts "3. Yellow"
+        puts "Enter selection as number"
+        good_input = false
+      end
+    end
     when "3"
       #register new guest
       puts "Guests: #{@venue.guests.map {|guest| guest.name}}"
       puts "Enter guest's name:"
-      @venue.guest_enters(Guest.new(gets.chomp, 50, @song1))
+      @venue.guest_enters(Guest.new(gets.chomp, rand(20..70), @all_songs.sample))
       system "clear"
       puts "Guests: #{@venue.guests.map {|guest| guest.name}}"
       puts "VENUE"

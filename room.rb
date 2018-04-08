@@ -11,8 +11,8 @@ class Room
   end
 
   def check_in(guest)
-    if guest.money >= @entry_fee
-      @guests.push(guest) if @guests.count < 8
+    if guest.money >= @entry_fee && @guests.count < 8
+      @guests.push(guest)
       guest.add_to_tab(@entry_fee)
       guest.sees_favourite_song(@songs)
     end
